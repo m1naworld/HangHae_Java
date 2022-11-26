@@ -2,32 +2,26 @@ package oop_practice;
 
 public class PublicTransportation {
 
-    static int num = 0;
-    int number;
-    int maxPassengerCount;
-    int currentPassengerCount;
-    int price;
-    int fuelAmount;
-    int currentSpeed;
-    String currentState;
+    private static int num = 0;
+    protected int number;
+    protected int maxPassengerCount;
+    protected int currentPassengerCount = 0;
+    protected int price;
+    protected int fuelAmount = 100;
+    protected int currentSpeed = 0;
+    protected String currentState;
 
 
     public PublicTransportation(int maxPassengerCount, int price, String currentState) {
         this.number = num + 1;
         this.maxPassengerCount = maxPassengerCount;
-        this.currentPassengerCount = 0;
         this.price = price;
-        this.fuelAmount = 100;
-        this.currentSpeed = 0;
         this.currentState = currentState;
     }
 
     public PublicTransportation() {
         num += 1;
         this.number = num;
-        this.currentPassengerCount = 0;
-        this.fuelAmount = 100;
-        this.currentSpeed = 0;
     }
 
     public int getNumber() {

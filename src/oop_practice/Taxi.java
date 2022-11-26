@@ -3,18 +3,16 @@ package oop_practice;
 
 public class Taxi extends PublicTransportation{
 
-    String destination;
-    int distanceToDestination; // 단위 km
-    int basicDistance; // 단위 km
+    private String destination;
+    private int distanceToDestination; // 단위 km
+    private int basicDistance; // 단위 km
 
-    int minimumRate;
-    int ratePerDistance;
+    private int minimumRate;
+    private int ratePerDistance;
 
     public Taxi() {
         this.maxPassengerCount = 4;
         this.minimumRate = 3000;
-        this.fuelAmount = 100;
-        this.currentSpeed = 0;
         this.currentState = "일반";
         this.basicDistance = 1;
         this.ratePerDistance = 1000;

@@ -2,7 +2,7 @@ package oop_practice;
 
 public class Bus extends PublicTransportation {
 
-    int priceAmount;
+    private int priceAmount;
 
     public Bus() {
         this.maxPassengerCount = 30;
