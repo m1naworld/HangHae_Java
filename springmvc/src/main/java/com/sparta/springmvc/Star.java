@@ -8,6 +8,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class Star {
-    String name;
-    int age;
+    private String name;
+    private int age;
 }
