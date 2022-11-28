@@ -1,5 +1,8 @@
 .idea
 oopExam.iml
+oopExam/
+springjpa/
+
 
 ### IntelliJ IDEA ###
 out/
