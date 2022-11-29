@@ -45,5 +45,9 @@ public class Posting {
         this.content = postDto.getContent();
     }
 
+    public void update(PostingDto postingDto){
+        this.title = postingDto.getTitle();
+        this.content = postingDto.getContent();
+    }
 
 }
