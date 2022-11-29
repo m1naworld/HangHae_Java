@@ -1,9 +1,11 @@
 package com.sparta.springproject.service;
 
 import com.sparta.springproject.dto.PostingDto;
+import com.sparta.springproject.dto.ResponseDto;
 import com.sparta.springproject.entity.Posting;
 import com.sparta.springproject.repository.PostingRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -17,17 +19,16 @@ public class PostService {
 
 
     // 게시글 등록
-    public Map<String, Object> registerPost(PostingDto myPostDto){
-        Map<String, Object> result = new HashMap<>();
-
-        Posting posing  = new Posting(myPostDto);
+    public ResponseDto registerPost(PostingDto postDto){
+        Posting posing  = new Posting(postDto);
         postingRepository.save(posing);
 
-        result.put("result", "success");
-        result.put("message", "게시글 등록 완료!");
+        String msg = "게시글 등록 완료!";
 
-        return result;
+        return new ResponseDto("게시글 등록 완료!");
     }
+
+
 
 
 }
