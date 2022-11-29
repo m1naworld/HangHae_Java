@@ -2,9 +2,11 @@ package com.sparta.springproject.service;
 
 import com.sparta.springproject.dto.PostingDto;
 import com.sparta.springproject.dto.ResponseDto;
+import com.sparta.springproject.dto.ResponsePostingDto;
 import com.sparta.springproject.entity.Posting;
 import com.sparta.springproject.repository.PostingRepository;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -19,13 +21,11 @@ public class PostService {
 
 
     // 게시글 등록
-    public ResponseDto registerPost(PostingDto postDto){
-        Posting posing  = new Posting(postDto);
-        postingRepository.save(posing);
+    public ResponsePostingDto registerPost(PostingDto postDto){
+        Posting posting  = new Posting(postDto);
+        postingRepository.save(posting);
 
-        String msg = "게시글 등록 완료!";
-
-        return new ResponseDto("게시글 등록 완료!");
+        return new ResponsePostingDto(posting);
     }
 
 
