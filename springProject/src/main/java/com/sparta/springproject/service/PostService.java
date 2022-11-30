@@ -4,6 +4,7 @@ import com.sparta.springproject.dto.PostingDto;
 import com.sparta.springproject.dto.ResponsePostingDto;
 import com.sparta.springproject.entity.Posting;
 import com.sparta.springproject.repository.PostingRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,12 +21,14 @@ public class PostService {
 
 
     // 하나의 게시글 반환
+    @Transactional
     public ResponsePostingDto findOnePost(Long id){
         Posting posting = postingRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("게시글이 존재하지 않습니다."));
         return  new ResponsePostingDto(posting);
     }
 
     // 모든 게시글 반환
+    @Transactional
     public List<ResponsePostingDto> findAllPost(){
         List<Posting> postings = postingRepository.findAll();
 
@@ -40,6 +43,7 @@ public class PostService {
 
 
     // 게시글 등록
+    @Transactional
     public ResponsePostingDto registerPost(PostingDto postDto) {
         Posting posting = new Posting(postDto);
         postingRepository.save(posting);
@@ -49,6 +53,7 @@ public class PostService {
 
 
     // 게시글 비밀번호 확인 로직
+
     private Map<String, Object> checkPassword(Long id, String password) {
         Map<String, Object> map = new HashMap<>();
 
@@ -68,6 +73,7 @@ public class PostService {
 
 
     //게시글 수정
+    @Transactional
     public Map<String, Object> updatePost(Long id, PostingDto postingDto) {
         Map<String, Object> map = new HashMap<>();
         Map<String, Object> checkPost = checkPassword(id, postingDto.getPostPassword());
@@ -88,6 +94,7 @@ public class PostService {
 
 
     // 게시글 삭제
+    @Transactional
     public Map<String, Object> deletePost(Long id, String password){
 
         Map<String, Object> checkPost = checkPassword(id, password);
