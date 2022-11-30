@@ -1,16 +1,15 @@
 package com.sparta.springproject.service;
 
 import com.sparta.springproject.dto.PostingDto;
-import com.sparta.springproject.dto.ResponseDto;
 import com.sparta.springproject.dto.ResponsePostingDto;
 import com.sparta.springproject.entity.Posting;
 import com.sparta.springproject.repository.PostingRepository;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -18,6 +17,26 @@ import java.util.Map;
 public class PostService {
 
     private final PostingRepository postingRepository;
+
+
+    // 하나의 게시글 반환
+    public ResponsePostingDto findOnePost(Long id){
+        Posting posting = postingRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("게시글이 존재하지 않습니다."));
+        return  new ResponsePostingDto(posting);
+    }
+
+    // 모든 게시글 반환
+    public List<ResponsePostingDto> findAllPost(){
+        List<Posting> postings = postingRepository.findAll();
+
+        List<ResponsePostingDto> result = new ArrayList<>();
+
+        for(Posting p : postings){
+            result.add(new ResponsePostingDto(p));
+        }
+
+        return result;
+    }
 
 
     // 게시글 등록
@@ -47,7 +66,7 @@ public class PostService {
         return map;
     }
 
-    
+
     //게시글 수정
     public Map<String, Object> updatePost(Long id, PostingDto postingDto) {
         Map<String, Object> map = new HashMap<>();
@@ -64,6 +83,23 @@ public class PostService {
             map.put("message", "비밀번호가 일치하지 않습니다.");
             map.put("result", "fail");
         }
+        return map;
+    }
+
+
+    // 게시글 삭제
+    public Map<String, Object> deletePost(Long id, String password){
+
+        Map<String, Object> checkPost = checkPassword(id, password);
+
+        Map<String, Object> map = new HashMap<>();
+        if(checkPost.get("result").equals("success")){
+            postingRepository.deleteById(id);
+            map.put("message", "게시글 삭제 완료!");
+        }else{
+            map.put("message", "비밀번호가 일치하지 않습니다.");
+        }
+
         return map;
     }
 }
