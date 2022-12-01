@@ -1,6 +1,6 @@
 package com.sparta.springapiexam.entity;
 
-import com.sparta.springapiexam.dto.MemberResponseDto;
+import com.sparta.springapiexam.dto.MemberDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,10 +23,10 @@ public class Member {
     @Column(nullable = false)
     private String pw;
 
-    public Member(MemberResponseDto memberResponseDto) {
-        this.name = memberResponseDto.getName();
-        this.email = memberResponseDto.getEmail();
-        this.pw = memberResponseDto.getPw();
+    public Member(MemberDto memberDto) {
+        this.name = memberDto.getName();
+        this.email = memberDto.getEmail();
+        this.pw = memberDto.getPw();
     }
 
 

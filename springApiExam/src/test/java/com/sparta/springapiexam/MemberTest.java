@@ -1,7 +1,7 @@
 package com.sparta.springapiexam;
 
 
-import com.sparta.springapiexam.dto.MemberResponseDto;
+import com.sparta.springapiexam.dto.MemberDto;
 import com.sparta.springapiexam.entity.Member;
 import com.sparta.springapiexam.repository.MemberRepository;
 import jakarta.transaction.Transactional;
@@ -24,14 +24,14 @@ public class MemberTest {
     void insertMember(){
 
         //given : 선행조건 기술
-        MemberResponseDto member1= new MemberResponseDto(1L, "윤지용", "jyyoon@naver.com", "1234");
-        MemberResponseDto member2 = new MemberResponseDto(2L, "손윤주", "yjson@naver.com", "3421");
+        MemberDto member1= new MemberDto(1L, "윤지용", "jyyoon@naver.com", "1234");
+        MemberDto member2 = new MemberDto(2L, "손윤주", "yjson@naver.com", "3421");
 
         //when : 기능 수행
         memberRepository.save(new Member(member1));
         memberRepository.save(new Member(member2));
 
-        //then : 결과 확인
+//        //then : 결과 확인
         List<Member> members = memberRepository.findAll();
 
         for(int i=0; i < members.size(); i++){
