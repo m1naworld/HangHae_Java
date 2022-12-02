@@ -6,6 +6,9 @@ import com.sparta.springapiexam.dto.MemberResponseDto;
 import com.sparta.springapiexam.dto.ResponseDto;
 import com.sparta.springapiexam.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,24 +22,24 @@ public class MemberController {
     private final MemberService memberService;
 
     @GetMapping("/member/{id}")
-    public ResponseDto getMemberInfo(@PathVariable Long id) {
+    public ResponseEntity<ResponseDto> getMemberInfo(@PathVariable Long id) {
 
         try {
             MemberDto memberDto = memberService.findMember(id);
-            return new MemberResponseDto(200, "회원 조회 성공", memberDto);
+            return ResponseEntity.status(HttpStatus.OK).body(new MemberResponseDto("회원 조회 성공", memberDto));
         } catch (NullPointerException e) {
-            return new ResponseDto(200, "존재하지 않는 회원");
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto("존재하지 않는 회원"));
         }
     }
 
     @GetMapping("/member")
-    public ResponseDto getMemberList() {
+    public ResponseEntity<ResponseDto> getMemberList() {
 
         try {
             List<MemberDto> members = memberService.findAllMember();
-            return new MemberListResponseDto(200, "회원 전체 조회", members);
+            return ResponseEntity.status(HttpStatus.OK).body(new MemberListResponseDto("회원 전체 조회", members));
         } catch (NullPointerException e) {
-            return new ResponseDto(200, "존재하는 회원 업음");
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto("존재하는 회원 업음"));
         }
     }
 

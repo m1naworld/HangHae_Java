@@ -1,22 +1,21 @@
 package com.sparta.springapiexam.service;
 
 import com.sparta.springapiexam.dto.MemberDto;
-import com.sparta.springapiexam.dto.MemberListResponseDto;
-import com.sparta.springapiexam.dto.MemberResponseDto;
-import com.sparta.springapiexam.dto.ResponseDto;
 import com.sparta.springapiexam.entity.Member;
 import com.sparta.springapiexam.repository.MemberRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class MemberService {
 
     private final MemberRepository memberRepository;
+
+    public MemberService(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
+    }
 
     public MemberDto findMember(Long id) {
             Member member = memberRepository.findById(id).orElseThrow(() -> new NullPointerException("No User Found"));

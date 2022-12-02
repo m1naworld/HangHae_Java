@@ -6,8 +6,8 @@ import lombok.Getter;
 public class MemberResponseDto extends ResponseDto{
     private final MemberDto memberDto;
 
-    public MemberResponseDto(int statusCode, String message, MemberDto memberDto) {
-        super (statusCode , message);
+    public MemberResponseDto(String message, MemberDto memberDto) {
+        super (message);
         this.memberDto = memberDto;
     }
 }

@@ -6,8 +6,8 @@ public class MemberListResponseDto extends ResponseDto {
 
     private List<MemberDto> members;
 
-    public MemberListResponseDto(int statusCode, String message, List<MemberDto> members) {
-        super(statusCode, message);
+    public MemberListResponseDto(String message, List<MemberDto> members) {
+        super(message);
         this.members = members;
     }
 }
