@@ -1,9 +1,9 @@
 package com.sparta.springproject.controller;
 
 import com.sparta.springproject.dto.PostingDto;
+import com.sparta.springproject.dto.ResponseDto;
 import com.sparta.springproject.dto.ResponsePostingDto;
 import com.sparta.springproject.service.PostService;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +21,7 @@ public class PostController {
 
 
     @GetMapping("/post/{id}")
-    public  ResponsePostingDto findOnePost(@PathVariable Long id){
+    public  ResponsePostingDto findOnePost(@PathVariable Long id) throws Throwable {
         return postService.findOnePost(id);
     }
 
@@ -39,12 +39,12 @@ public class PostController {
 
 
     @PutMapping("/post/{id}")
-    public ResponseEntity<Map<String, Object>> updatePost(@PathVariable Long id, @RequestBody PostingDto postingDto){
+    public ResponseEntity<ResponseDto> updatePost(@PathVariable Long id, @RequestBody PostingDto postingDto){
         return ResponseEntity.status(HttpStatus.OK).body(postService.updatePost(id, postingDto));
     }
 
     @DeleteMapping("/post/{id}")
-    public ResponseEntity<Map<String, Object>> deletePost(@PathVariable Long id, @RequestBody Map<String, String> password){
+    public ResponseEntity<ResponseDto> deletePost(@PathVariable Long id, @RequestBody Map<String, String> password)  {
         return ResponseEntity.status(HttpStatus.OK).body(postService.deletePost(id, password.get("password")));
     }
 

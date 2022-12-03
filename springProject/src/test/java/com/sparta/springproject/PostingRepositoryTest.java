@@ -36,7 +36,7 @@ public class PostingRepositoryTest {
 
     // 비밀번호 확인
     @Test
-    void checkPassword(){
+    void checkPassword() throws Throwable {
 
         // given
         PostingDto myPostDto = new PostingDto("취업", "미나냐", "1234", "취뽀하고싶다!");
@@ -50,7 +50,7 @@ public class PostingRepositoryTest {
 
 
         // then
-        Posting result = postingRepository.findById(id).orElseThrow(
+        Posting result = (Posting) postingRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("게시글이 존재하지 않습니다.")
         );
 

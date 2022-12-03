@@ -8,9 +8,15 @@ import lombok.NoArgsConstructor;
 public class ResponseDto {
 
     private String msg;
+    private String result;
 
-    public ResponseDto(String msg){
+    private ResponsePostingDto responsePostingDto;
+
+    public ResponseDto(String msg, String result, ResponsePostingDto responsePostingDto){
         this.msg = msg;
+        this.result = result;
+        this.responsePostingDto = responsePostingDto;
+
     }
 
 }

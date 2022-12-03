@@ -1,6 +1,7 @@
 package com.sparta.springproject.service;
 
 import com.sparta.springproject.dto.PostingDto;
+import com.sparta.springproject.dto.ResponseDto;
 import com.sparta.springproject.dto.ResponsePostingDto;
 import com.sparta.springproject.entity.Posting;
 import com.sparta.springproject.repository.PostingRepository;
@@ -22,8 +23,8 @@ public class PostService {
 
     // 하나의 게시글 반환
     @Transactional
-    public ResponsePostingDto findOnePost(Long id){
-        Posting posting = postingRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("게시글이 존재하지 않습니다."));
+    public ResponsePostingDto findOnePost(Long id) throws Throwable {
+        Posting posting = (Posting) postingRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("게시글이 존재하지 않습니다."));
         return  new ResponsePostingDto(posting);
     }
 
@@ -54,59 +55,52 @@ public class PostService {
 
     // 게시글 비밀번호 확인 로직
 
-    private Map<String, Object> checkPassword(Long id, String password) {
-        Map<String, Object> map = new HashMap<>();
+    private ResponseDto checkPassword(Long id, String password)  {
+        try {
+            Posting posting = (Posting) postingRepository.findById(id).orElseThrow();
 
-        Posting posting = postingRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("게시글이 존재하지 않습니다.")
-        );
-
-        if (posting.getPostPassword().equals(password)) {
-            map.put("result", "success");
-            map.put("postingEntity", posting);
-        } else {
-            map.put("result", "fail");
+            if (posting.getPostPassword().equals(password)) {
+                return new ResponseDto(null, "success", new ResponsePostingDto(posting));
+            } else {
+                return new ResponseDto(null, "fail", null);
+            }
+        } catch (IllegalArgumentException e){
+            return new ResponseDto("게시글이 존재하지 않습니다.", "fail", null);
         }
 
-        return map;
     }
 
 
     //게시글 수정
     @Transactional
-    public Map<String, Object> updatePost(Long id, PostingDto postingDto) {
-        Map<String, Object> map = new HashMap<>();
-        Map<String, Object> checkPost = checkPassword(id, postingDto.getPostPassword());
+    public ResponseDto updatePost(Long id, PostingDto postingDto){
+        ResponseDto checkPost = checkPassword(id, postingDto.getPostPassword());
 
-        if(checkPost.get("result").equals("success")){
-            Posting posting = (Posting) checkPost.get("postingEntity");
+        if(checkPost.getResult().equals("success")){
+            Posting posting = new Posting(checkPost.getResponsePostingDto());
             posting.update(postingDto);
             ResponsePostingDto responsePostingDto = new ResponsePostingDto(posting);
-            map.put("message", "게시글 수정 완료!");
-            map.put("result", "success");
-            map.put("responsePostingDto", responsePostingDto);
+
+            return new ResponseDto("게시글 수정 완료!", "success", responsePostingDto);
         }else{
-            map.put("message", "비밀번호가 일치하지 않습니다.");
-            map.put("result", "fail");
+          return new ResponseDto("비밀번호가 일치하지 않습니다.", "fail", null);
         }
-        return map;
     }
 
 
     // 게시글 삭제
     @Transactional
-    public Map<String, Object> deletePost(Long id, String password){
+    public ResponseDto deletePost(Long id, String password)  {
 
-        Map<String, Object> checkPost = checkPassword(id, password);
+        ResponseDto checkPost = checkPassword(id, password);
 
         Map<String, Object> map = new HashMap<>();
-        if(checkPost.get("result").equals("success")){
+        if(checkPost.getResult().equals("success")){
             postingRepository.deleteById(id);
-            map.put("message", "게시글 삭제 완료!");
+            return new ResponseDto("게시글 삭제 완료!", "success", null);
         }else{
-            map.put("message", "비밀번호가 일치하지 않습니다.");
+            return new ResponseDto("비밀번호가 일치하지 않습니다.", "fail", null);
         }
 
-        return map;
     }
 }

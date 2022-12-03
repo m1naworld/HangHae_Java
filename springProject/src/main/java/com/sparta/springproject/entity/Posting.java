@@ -1,6 +1,7 @@
 package com.sparta.springproject.entity;
 
 import com.sparta.springproject.dto.PostingDto;
+import com.sparta.springproject.dto.ResponsePostingDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -43,6 +44,15 @@ public class Posting {
         this.author = postDto.getAuthor();
         this.postPassword = postDto.getPostPassword();
         this.content = postDto.getContent();
+    }
+
+    public Posting(ResponsePostingDto responsePostingDto) {
+        this.id = responsePostingDto.getId();
+        this.title = responsePostingDto.getTitle();
+        this.author = responsePostingDto.getAuthor();
+        this.content = responsePostingDto.getContent();
+        this.createdAt = responsePostingDto.getCreatedAt();
+        this.modifiedAt = responsePostingDto.getModifiedAt();
     }
 
     public void update(PostingDto postingDto){
