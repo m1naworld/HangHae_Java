@@ -7,7 +7,6 @@ import com.sparta.springapiexam.dto.ResponseDto;
 import com.sparta.springapiexam.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,7 +27,7 @@ public class MemberController {
             MemberDto memberDto = memberService.findMember(id);
             return ResponseEntity.status(HttpStatus.OK).body(new MemberResponseDto("회원 조회 성공", memberDto));
         } catch (NullPointerException e) {
-            return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto("존재하지 않는 회원"));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDto("존재하지 않는 회원"));
         }
     }
 
