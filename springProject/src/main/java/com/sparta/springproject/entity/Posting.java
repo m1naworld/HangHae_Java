@@ -39,25 +39,25 @@ public class Posting {
     @LastModifiedDate
     private LocalDateTime modifiedAt;
 
-    public Posting(PostingRequestDto postDto) {
-        this.title = postDto.getTitle();
-        this.author = postDto.getAuthor();
-        this.postPassword = postDto.getPostPassword();
-        this.content = postDto.getContent();
+    public Posting(PostingRequestDto postingRequestDto) {
+        this.title = postingRequestDto.getTitle();
+        this.author = postingRequestDto.getAuthor();
+        this.postPassword = postingRequestDto.getPostPassword();
+        this.content = postingRequestDto.getContent();
     }
 
-    public Posting(PostingDto responsePostingDto) {
-        this.id = responsePostingDto.getId();
-        this.title = responsePostingDto.getTitle();
-        this.author = responsePostingDto.getAuthor();
-        this.content = responsePostingDto.getContent();
-        this.createdAt = responsePostingDto.getCreatedAt();
-        this.modifiedAt = responsePostingDto.getModifiedAt();
-    }
-
-    public void update(PostingRequestDto postingDto){
+    public Posting(PostingDto postingDto) {
+        this.id = postingDto.getId();
         this.title = postingDto.getTitle();
+        this.author = postingDto.getAuthor();
         this.content = postingDto.getContent();
+        this.createdAt = postingDto.getCreatedAt();
+        this.modifiedAt = postingDto.getModifiedAt();
+    }
+
+    public void update(PostingRequestDto postingRequestDto){
+        this.title = postingRequestDto.getTitle();
+        this.content = postingRequestDto.getContent();
     }
 
 }

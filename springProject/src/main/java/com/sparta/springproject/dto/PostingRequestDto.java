@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PostingRequestDto {
 
-    private Long id;
     private String title;
     private String author;
     private String postPassword;
@@ -29,7 +28,5 @@ public class PostingRequestDto {
         this.postPassword = postPassword;
         this.content = content;
     }
-
-    // dto setter 열려있어도됨
 
 }

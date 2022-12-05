@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor
-public class PostingDto extends ResponseDto{
+public class PostingDto{
 
     private Long id;
     private String title;

@@ -22,7 +22,7 @@ public class PostController {
 
 
     @GetMapping("/post/{id}")
-    public ResponseEntity<ResponseDto> findOnePost(@PathVariable Long id) throws Throwable {
+    public ResponseEntity<ResponseDto> findOnePost(@PathVariable Long id)  {
         try {
             PostingDto postingDto = postService.findOnePost(id);
             return ResponseEntity.status(HttpStatus.OK).body(new PostingResponseDto("", "success", postingDto));
@@ -39,8 +39,8 @@ public class PostController {
 
     @ResponseStatus(value = HttpStatus.OK)
     @PostMapping("/post")
-    public PostingDto resisterPost(@RequestBody PostingRequestDto postingDto) {
-        return postService.registerPost(postingDto);
+    public PostingDto resisterPost(@RequestBody PostingRequestDto postingRequestDto) {
+        return postService.registerPost(postingRequestDto);
     }
 
 

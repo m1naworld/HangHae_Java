@@ -22,8 +22,8 @@ public class PostService {
 
     // 하나의 게시글 반환
     @Transactional
-    public PostingDto findOnePost(Long id) throws Throwable {
-        Posting posting = (Posting) postingRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("게시글이 존재하지 않습니다."));
+    public PostingDto findOnePost(Long id)  {
+        Posting posting = postingRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("게시글이 존재하지 않습니다."));
         return new PostingDto(posting);
     }
 
@@ -43,8 +43,8 @@ public class PostService {
 
     // 게시글 등록
     @Transactional
-    public PostingDto registerPost(PostingRequestDto postDto) {
-        Posting posting = new Posting(postDto);
+    public PostingDto registerPost(PostingRequestDto postingRequestDto) {
+        Posting posting = new Posting(postingRequestDto);
         postingRepository.save(posting);
 
         return new PostingDto(posting);
@@ -52,14 +52,13 @@ public class PostService {
 
 
     // 게시글 비밀번호 확인 로직
-
-    private PostingDto checkPassword(Long id, String password) {
+    private Posting checkPassword(Long id, String password) {
         Posting posting = postingRepository.findById(id).orElseThrow(IllegalArgumentException::new);
 
         if (posting.getPostPassword().equals(password)) {
-            return new PostingDto(posting);
+            return posting;
         } else {
-            return new PostingDto();
+            return new Posting();
         }
     }
 
@@ -67,15 +66,13 @@ public class PostService {
     //게시글 수정
     @Transactional
     public ResponseDto updatePost(Long id, PostingRequestDto postingDto) {
-        PostingDto checkPost = checkPassword(id, postingDto.getPostPassword());
+        Posting posting = checkPassword(id, postingDto.getPostPassword());
 
-        if (checkPost.getId() != null) {
-            Posting posting = new Posting(checkPost.getResponsePostingDto());
+        if (posting.getId() != null) {
             posting.update(postingDto);
             PostingDto responsePostingDto = new PostingDto(posting);
             return new PostingResponseDto("게시글 수정 완료!", "success", responsePostingDto);
         } else {
-            System.out.println("과연?!");
             return new ResponseDto("비밀번호가 일치하지 않습니다.", "fail");
         }
     }
@@ -85,7 +82,7 @@ public class PostService {
     @Transactional
     public ResponseDto deletePost(Long id, String password) {
 
-        PostingDto checkPost = checkPassword(id, password);
+        Posting checkPost = checkPassword(id, password);
 
         if (checkPost.getId() != null) {
             postingRepository.deleteById(id);

@@ -10,10 +10,6 @@ public class ResponseDto {
     private String msg;
     private String result;
 
-    private int stateCode;
-
-    private PostingDto responsePostingDto;
-
     public ResponseDto(String msg, String result){
         this.msg = msg;
         this.result = result;
