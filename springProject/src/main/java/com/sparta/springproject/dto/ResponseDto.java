@@ -10,9 +10,9 @@ public class ResponseDto {
     private String msg;
     private String result;
 
-    private ResponsePostingDto responsePostingDto;
+    private PostingResponseDto responsePostingDto;
 
-    public ResponseDto(String msg, String result, ResponsePostingDto responsePostingDto){
+    public ResponseDto(String msg, String result, PostingResponseDto responsePostingDto){
         this.msg = msg;
         this.result = result;
         this.responsePostingDto = responsePostingDto;

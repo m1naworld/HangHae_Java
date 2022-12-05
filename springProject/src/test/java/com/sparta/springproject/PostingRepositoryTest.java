@@ -1,6 +1,6 @@
 package com.sparta.springproject;
 
-import com.sparta.springproject.dto.PostingDto;
+import com.sparta.springproject.dto.PostingRequestDto;
 import com.sparta.springproject.entity.Posting;
 import com.sparta.springproject.repository.PostingRepository;
 import org.junit.jupiter.api.Test;
@@ -20,7 +20,7 @@ public class PostingRepositoryTest {
     @Test
     void checkPostPosting(){
         // 영속성 컨텍스트 -> 모은 쿼리들을 한번에 mock객체, mockito 찾아보기 >> jpa와 별개인 테스트 상황
-        PostingDto myPostDto = new PostingDto("취업", "미나냐", "1234", "취뽀하고싶다!");
+        PostingRequestDto myPostDto = new PostingRequestDto("취업", "미나냐", "1234", "취뽀하고싶다!");
 
         Posting posing  = new Posting(myPostDto);
         System.out.println("DB 저장 전 게시글 생성 시간: " + posing.getCreatedAt());
@@ -39,7 +39,7 @@ public class PostingRepositoryTest {
     void checkPassword() throws Throwable {
 
         // given
-        PostingDto myPostDto = new PostingDto("취업", "미나냐", "1234", "취뽀하고싶다!");
+        PostingRequestDto myPostDto = new PostingRequestDto("취업", "미나냐", "1234", "취뽀하고싶다!");
         Posting posing  = new Posting(myPostDto);
         postingRepository.save(posing);
 

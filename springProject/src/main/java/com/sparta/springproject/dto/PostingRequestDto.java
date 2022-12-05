@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class PostingDto {
+public class PostingRequestDto {
 
     private Long id;
     private String title;
@@ -14,7 +14,7 @@ public class PostingDto {
     private String content;
 
 
-    public PostingDto(PostingDto postingDto) {
+    public PostingRequestDto(PostingRequestDto postingDto) {
         this.title = postingDto.title;
         this.author = postingDto.author;
         this.postPassword = postingDto.postPassword;
@@ -23,7 +23,7 @@ public class PostingDto {
 
 
 
-    public PostingDto(String title, String author, String postPassword, String content){
+    public PostingRequestDto(String title, String author, String postPassword, String content){
         this.title = title;
         this.author = author;
         this.postPassword = postPassword;

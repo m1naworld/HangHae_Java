@@ -1,7 +1,7 @@
 package com.sparta.springproject.entity;
 
-import com.sparta.springproject.dto.PostingDto;
-import com.sparta.springproject.dto.ResponsePostingDto;
+import com.sparta.springproject.dto.PostingRequestDto;
+import com.sparta.springproject.dto.PostingResponseDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -39,14 +39,14 @@ public class Posting {
     @LastModifiedDate
     private LocalDateTime modifiedAt;
 
-    public Posting(PostingDto postDto) {
+    public Posting(PostingRequestDto postDto) {
         this.title = postDto.getTitle();
         this.author = postDto.getAuthor();
         this.postPassword = postDto.getPostPassword();
         this.content = postDto.getContent();
     }
 
-    public Posting(ResponsePostingDto responsePostingDto) {
+    public Posting(PostingResponseDto responsePostingDto) {
         this.id = responsePostingDto.getId();
         this.title = responsePostingDto.getTitle();
         this.author = responsePostingDto.getAuthor();
@@ -55,7 +55,7 @@ public class Posting {
         this.modifiedAt = responsePostingDto.getModifiedAt();
     }
 
-    public void update(PostingDto postingDto){
+    public void update(PostingRequestDto postingDto){
         this.title = postingDto.getTitle();
         this.content = postingDto.getContent();
     }

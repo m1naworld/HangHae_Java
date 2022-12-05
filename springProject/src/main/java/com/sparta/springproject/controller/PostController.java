@@ -1,8 +1,8 @@
 package com.sparta.springproject.controller;
 
-import com.sparta.springproject.dto.PostingDto;
+import com.sparta.springproject.dto.PostingRequestDto;
 import com.sparta.springproject.dto.ResponseDto;
-import com.sparta.springproject.dto.ResponsePostingDto;
+import com.sparta.springproject.dto.PostingResponseDto;
 import com.sparta.springproject.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,25 +21,25 @@ public class PostController {
 
 
     @GetMapping("/post/{id}")
-    public  ResponsePostingDto findOnePost(@PathVariable Long id) throws Throwable {
+    public PostingResponseDto findOnePost(@PathVariable Long id) throws Throwable {
         return postService.findOnePost(id);
     }
 
     @GetMapping("/post")
-    public List<ResponsePostingDto> findAllPost(){
+    public List<PostingResponseDto> findAllPost(){
         return postService.findAllPost();
     }
 
 
     @ResponseStatus(value = HttpStatus.OK)
     @PostMapping("/post")
-    public ResponsePostingDto resisterPost(@RequestBody PostingDto postingDto){
+    public PostingResponseDto resisterPost(@RequestBody PostingRequestDto postingDto){
         return postService.registerPost(postingDto);
     }
 
 
     @PutMapping("/post/{id}")
-    public ResponseEntity<ResponseDto> updatePost(@PathVariable Long id, @RequestBody PostingDto postingDto){
+    public ResponseEntity<ResponseDto> updatePost(@PathVariable Long id, @RequestBody PostingRequestDto postingDto){
         return ResponseEntity.status(HttpStatus.OK).body(postService.updatePost(id, postingDto));
     }
 

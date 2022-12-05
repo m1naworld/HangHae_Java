@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor
-public class ResponsePostingDto {
+public class PostingResponseDto {
 
     private Long id;
     private String title;
@@ -18,7 +18,7 @@ public class ResponsePostingDto {
     private LocalDateTime modifiedAt;
 
 
-    public ResponsePostingDto(Posting posting){
+    public PostingResponseDto(Posting posting){
         this.id = posting.getId();
         this.title = posting.getTitle();
         this.author = posting.getAuthor();
