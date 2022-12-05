@@ -1,9 +1,10 @@
 package com.sparta.springproject.repository;
 
 
+import com.sparta.springproject.entity.Posting;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface PostingRepository<Posting> extends JpaRepository<com.sparta.springproject.entity.Posting, Long> {
+public interface PostingRepository extends JpaRepository<Posting, Long> {
 
 
 }

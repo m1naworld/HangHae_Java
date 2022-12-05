@@ -10,13 +10,13 @@ public class ResponseDto {
     private String msg;
     private String result;
 
-    private PostingResponseDto responsePostingDto;
+    private int stateCode;
 
-    public ResponseDto(String msg, String result, PostingResponseDto responsePostingDto){
+    private PostingDto responsePostingDto;
+
+    public ResponseDto(String msg, String result){
         this.msg = msg;
         this.result = result;
-        this.responsePostingDto = responsePostingDto;
-
     }
 
 }

@@ -1,29 +1,11 @@
 package com.sparta.springproject.dto;
 
-import com.sparta.springproject.entity.Posting;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+public class PostingResponseDto extends ResponseDto{
 
-import java.time.LocalDateTime;
+    private PostingDto postingDto;
 
-@Getter
-@NoArgsConstructor
-public class PostingResponseDto {
-
-    private Long id;
-    private String title;
-    private String author;
-    private String content;
-    private LocalDateTime createdAt;
-    private LocalDateTime modifiedAt;
-
-
-    public PostingResponseDto(Posting posting){
-        this.id = posting.getId();
-        this.title = posting.getTitle();
-        this.author = posting.getAuthor();
-        this.content = posting.getContent();
-        this.createdAt = posting.getCreatedAt();
-        this.modifiedAt = posting.getModifiedAt();
+    public PostingResponseDto(String msg, String result, PostingDto postingDto) {
+        super(msg, result);
+        this.postingDto = postingDto;
     }
 }
