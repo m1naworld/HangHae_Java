@@ -10,6 +10,8 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Entity
@@ -18,7 +20,7 @@ import java.time.LocalDateTime;
 public class Posting {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
@@ -36,14 +38,15 @@ public class Posting {
     @LastModifiedDate
     private LocalDateTime modifiedAt;
 
-
+    @OneToMany(mappedBy = "posting", fetch = FetchType.LAZY)
+    private List<Comment> comments = new ArrayList<>();
 
     public Posting(PostingRequestDto postingRequestDto, String username) {
         this.title = postingRequestDto.getTitle();
         this.username = username;
         this.content = postingRequestDto.getContent();
     }
-
+    // ze
     public Posting(PostingDto postingDto) {
         this.id = postingDto.getId();
         this.title = postingDto.getTitle();
