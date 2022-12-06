@@ -25,10 +25,7 @@ public class Posting {
     private String title;
 
     @Column(nullable = false)
-    private String author;
-
-    @Column(nullable = false)
-    private String postPassword;
+    private String username;
 
     @Column(nullable = false)
     private String content;
@@ -39,25 +36,26 @@ public class Posting {
     @LastModifiedDate
     private LocalDateTime modifiedAt;
 
-    public Posting(PostingRequestDto postingRequestDto) {
+
+
+    public Posting(PostingRequestDto postingRequestDto, String username) {
         this.title = postingRequestDto.getTitle();
-        this.author = postingRequestDto.getAuthor();
-        this.postPassword = postingRequestDto.getPostPassword();
+        this.username = username;
         this.content = postingRequestDto.getContent();
     }
 
     public Posting(PostingDto postingDto) {
         this.id = postingDto.getId();
         this.title = postingDto.getTitle();
-        this.author = postingDto.getAuthor();
+        this.username = postingDto.getUsername();
         this.content = postingDto.getContent();
         this.createdAt = postingDto.getCreatedAt();
         this.modifiedAt = postingDto.getModifiedAt();
     }
 
-    public void update(PostingRequestDto postingRequestDto){
-        this.title = postingRequestDto.getTitle();
-        this.content = postingRequestDto.getContent();
+    public void update(String title, String content){
+        this.title = title;
+        this.content = content;
     }
 
 }

@@ -8,24 +8,18 @@ import lombok.NoArgsConstructor;
 public class PostingRequestDto {
 
     private String title;
-    private String author;
-    private String postPassword;
     private String content;
 
 
     public PostingRequestDto(PostingRequestDto postingDto) {
         this.title = postingDto.title;
-        this.author = postingDto.author;
-        this.postPassword = postingDto.postPassword;
         this.content = postingDto.content;
     }
 
 
 
-    public PostingRequestDto(String title, String author, String postPassword, String content){
+    public PostingRequestDto(String title,  String content){
         this.title = title;
-        this.author = author;
-        this.postPassword = postPassword;
         this.content = content;
     }
 

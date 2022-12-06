@@ -8,11 +8,11 @@ import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor
-public class PostingDto{
+public class PostingDto {
 
     private Long id;
     private String title;
-    private String author;
+    private String username;
     private String content;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
@@ -21,7 +21,7 @@ public class PostingDto{
     public PostingDto(Posting posting){
         this.id = posting.getId();
         this.title = posting.getTitle();
-        this.author = posting.getAuthor();
+        this.username = posting.getUsername();
         this.content = posting.getContent();
         this.createdAt = posting.getCreatedAt();
         this.modifiedAt = posting.getModifiedAt();
