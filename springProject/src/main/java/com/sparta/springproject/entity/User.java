@@ -1,7 +1,6 @@
 package com.sparta.springproject.entity;
 
 
-import com.sparta.springproject.dto.UserDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

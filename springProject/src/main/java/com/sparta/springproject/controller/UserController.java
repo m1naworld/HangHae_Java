@@ -23,16 +23,18 @@ public class UserController {
     @PostMapping("/signup")
     public ResponseEntity<ResponseDto> signup(@RequestBody @Valid UserDto userDto) {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(userService.insertUser(userDto));
+            String result = userService.insertUser(userDto); // success
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(result, "회원가입 성공!"));
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(new ResponseDto("fail", "중복된 사용자가 존재합니다."));
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(new ResponseDto("fail", "중복된 username 입니다."));
         }
     }
 
     @PostMapping("/login")
     public ResponseEntity<ResponseDto> login(@RequestBody UserDto userDto, HttpServletResponse response) {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(userService.login(userDto, response));
+            String result = userService.login(userDto, response); // success
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(result, "로그인 성공!"));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ResponseDto("fail", "아이디 혹은 비밀번호가 일치하지 않습니다."));
         }
