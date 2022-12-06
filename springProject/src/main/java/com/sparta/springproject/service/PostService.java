@@ -52,6 +52,7 @@ public class PostService {
 
 
     // 게시글 비밀번호 확인 로직
+    @Transactional
     private Posting checkPassword(Long id, String password) {
         Posting posting = postingRepository.findById(id).orElseThrow(IllegalArgumentException::new);
 
@@ -71,9 +72,9 @@ public class PostService {
         if (posting.getId() != null) {
             posting.update(postingDto);
             PostingDto responsePostingDto = new PostingDto(posting);
-            return new PostingResponseDto("게시글 수정 완료!", "success", responsePostingDto);
+            return new PostingResponseDto("success", "게시글 수정 완료!", responsePostingDto);
         } else {
-            return new ResponseDto("비밀번호가 일치하지 않습니다.", "fail");
+            return new ResponseDto("fail", "비밀번호가 일치하지 않습니다.");
         }
     }
 
@@ -86,9 +87,9 @@ public class PostService {
 
         if (checkPost.getId() != null) {
             postingRepository.deleteById(id);
-            return new ResponseDto("게시글 삭제 완료!", "success");
+            return new ResponseDto("success", "게시글 삭제 완료!");
         } else {
-            return new ResponseDto("비밀번호가 일치하지 않습니다.", "fail");
+            return new ResponseDto("fail", "비밀번호가 일치하지 않습니다.");
         }
 
     }

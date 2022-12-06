@@ -9,8 +9,8 @@ public class PostingResponseDto extends ResponseDto{
 
     private PostingDto postingDto;
 
-    public PostingResponseDto(String msg, String result, PostingDto postingDto) {
-        super(msg, result);
+    public PostingResponseDto(String result, String message, PostingDto postingDto) {
+        super(result, message);
         this.postingDto = postingDto;
     }
 }

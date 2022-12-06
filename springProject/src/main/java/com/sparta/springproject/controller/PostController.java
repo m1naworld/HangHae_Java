@@ -25,9 +25,9 @@ public class PostController {
     public ResponseEntity<ResponseDto> findOnePost(@PathVariable Long id)  {
         try {
             PostingDto postingDto = postService.findOnePost(id);
-            return ResponseEntity.status(HttpStatus.OK).body(new PostingResponseDto("", "success", postingDto));
+            return ResponseEntity.status(HttpStatus.OK).body(new PostingResponseDto("success", "", postingDto));
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDto("게시글이 존재하지 않습니다.", "fail"));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDto("fail", "게시글이 존재하지 않습니다."));
         }
     }
 
@@ -49,7 +49,7 @@ public class PostController {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(postService.updatePost(id, postingDto));
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDto("게시글이 존재하지 않습니다.", "fail"));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDto("fail", "게시글이 존재하지 않습니다."));
         }
 
     }
@@ -59,7 +59,7 @@ public class PostController {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(postService.deletePost(id, password.get("password")));
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDto("게시글이 존재하지 않습니다.", "fail"));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDto("fail", "게시글이 존재하지 않습니다."));
         }
     }
 

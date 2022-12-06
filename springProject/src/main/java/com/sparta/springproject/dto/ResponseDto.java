@@ -7,12 +7,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ResponseDto {
 
-    private String msg;
     private String result;
+    private String message;
 
-    public ResponseDto(String msg, String result){
-        this.msg = msg;
+
+    public ResponseDto(String result, String message){
         this.result = result;
+        this.message = message;
+
     }
 
 }
