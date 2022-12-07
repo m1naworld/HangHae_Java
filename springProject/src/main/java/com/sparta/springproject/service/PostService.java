@@ -3,6 +3,7 @@ package com.sparta.springproject.service;
 import com.sparta.springproject.dto.*;
 import com.sparta.springproject.entity.Comment;
 import com.sparta.springproject.entity.Posting;
+import com.sparta.springproject.entity.UserRoleEnum;
 import com.sparta.springproject.jwt.JwtUtil;
 import com.sparta.springproject.repository.CommentRepository;
 import com.sparta.springproject.repository.PostingRepository;
@@ -21,7 +22,6 @@ public class PostService {
     private final PostingRepository postingRepository;
     private final CommentRepository commentRepository;
     private final JwtUtil jwtUtil;
-
 
     // 하나의 게시글 반환
     @Transactional
@@ -55,22 +55,13 @@ public class PostService {
         return result;
     }
 
-    // jwt를 검증 및 유저 반환
-    public String userCheck(HttpServletRequest request) throws JwtException {
-        String token = jwtUtil.resolveToken(request);
-
-        if (!jwtUtil.validateToken(token)) {
-            throw new JwtException("토큰에러");
-        }
-        return jwtUtil.getUserInfoFromToken(token);
-    }
-
-
     // 게시글 등록
     @Transactional
     public PostingDto registerPost(PostingRequestDto postingRequestDto, HttpServletRequest request) throws JwtException{
 
-        String username = userCheck(request);
+        UserDto user = jwtUtil.userCheck(request);
+
+        String username = user.getUsername();
 
         Posting posting = new Posting(postingRequestDto, username);
         postingRepository.save(posting);
@@ -79,18 +70,23 @@ public class PostService {
     }
 
 
+
     //게시글 수정
     @Transactional
     public PostingDto updatePost(Long id, PostingRequestDto postingDto, HttpServletRequest request) throws JwtException{
-        String username = userCheck(request);
+
+        UserDto user = jwtUtil.userCheck(request);
+        String username = user.getUsername();
+        UserRoleEnum role = user.getRole();
+
         String title = postingDto.getTitle();
         String content = postingDto.getContent();
 
         Posting posting = postingRepository.findById(id).orElseThrow(() -> new NullPointerException("게시글 없음"));
 
-        if (posting.getUsername().equals(username)) {
+        if (posting.getUsername().equals(username) || role.equals(UserRoleEnum.ADMIN)) {
 
-            posting.update(title, content);
+            posting.update(title, content, username);
 
             List<CommentDto> comments = new ArrayList<>();
 
@@ -107,11 +103,13 @@ public class PostService {
     // 게시글 삭제
     @Transactional
     public String deletePost(Long id, HttpServletRequest request) throws JwtException{
-        String username = userCheck(request);
+        UserDto user = jwtUtil.userCheck(request);
+        String username = user.getUsername();
+        UserRoleEnum role = user.getRole();
 
         Posting posting = postingRepository.findById(id).orElseThrow(() -> new NullPointerException("게시글 없음"));
 
-        if (posting.getUsername().equals(username)) {
+        if (posting.getUsername().equals(username) || role.equals(UserRoleEnum.ADMIN)) {
             postingRepository.deleteById(id);
             commentRepository.deleteById(id);
 

@@ -1,5 +1,8 @@
 package com.sparta.springproject.jwt;
 
+import com.sparta.springproject.dto.UserDto;
+import com.sparta.springproject.entity.UserRoleEnum;
+import com.sparta.springproject.repository.UserRepository;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
@@ -18,6 +21,8 @@ import java.util.Date;
 @Component
 @RequiredArgsConstructor
 public class JwtUtil {
+
+    private final UserRepository userRepository;
 
     public static final String AUTHORIZATION_HEADER = "Authorization";
     public static final String AUTHORIZATION_KEY = "auth";
@@ -45,12 +50,13 @@ public class JwtUtil {
     }
 
     // 토큰 생성
-    public String createToken(String username) {
+    public String createToken(String username, UserRoleEnum role) {
         Date date = new Date();
 
         return BEARER_PREFIX +
                 Jwts.builder()
                         .setSubject(username)
+                        .claim(AUTHORIZATION_KEY, role)
                         .setExpiration(new Date(date.getTime() + TOKEN_TIME))
                         .setIssuedAt(date)
                         .signWith(key, signatureAlgorithm)
@@ -75,8 +81,31 @@ public class JwtUtil {
     }
 
     // 토큰에서 사용자 정보 가져오기
-    public String getUserInfoFromToken(String token) {
-        Claims claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
-        return claims.getSubject();
+    public Claims getUserInfoFromToken(String token) {
+        return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
     }
+
+
+    // jwt 검증 및 유저 정보 반환 로직
+    public UserDto userCheck(HttpServletRequest request) throws JwtException {
+
+        String token = resolveToken(request);
+
+        if (!validateToken(token)) {
+            throw new JwtException("토큰 에러");
+        }
+
+        Claims userData = getUserInfoFromToken(token);
+        String username = userData.getSubject();
+        UserRoleEnum role = UserRoleEnum.valueOf(userData.get(JwtUtil.AUTHORIZATION_KEY).toString());
+
+        if(userRepository.findByUsername(username).isEmpty()){
+            throw new JwtException("없는 사용자");
+        }
+
+        return new UserDto(username, role);
+
+    }
+
+
 }

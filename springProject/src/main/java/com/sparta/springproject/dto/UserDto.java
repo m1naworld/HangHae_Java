@@ -1,18 +1,15 @@
 package com.sparta.springproject.dto;
 
-import jakarta.validation.constraints.Pattern;
+import com.sparta.springproject.entity.UserRoleEnum;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor
 public class UserDto {
+    String username;
+    UserRoleEnum role;
 
-    @Pattern(regexp = "^[a-z0-9]{4,10}$")
-    private String username;
-
-    @Pattern(regexp = "^[a-zA-Z0-9]{8,15}$")
-    private String password;
-
-
+    public UserDto(String username, UserRoleEnum role) {
+        this.username = username;
+        this.role = role;
+    }
 }

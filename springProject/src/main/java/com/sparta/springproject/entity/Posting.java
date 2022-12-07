@@ -26,6 +26,8 @@ public class Posting extends Timestamped{
     @Column(nullable = false)
     private String content;
 
+    private String editor;
+
     @OneToMany(mappedBy = "posting", fetch = FetchType.LAZY)
     private List<Comment> comments = new ArrayList<>();
 
@@ -35,9 +37,10 @@ public class Posting extends Timestamped{
         this.content = postingRequestDto.getContent();
     }
 
-    public void update(String title, String content){
+    public void update(String title, String content, String editor){
         this.title = title;
         this.content = content;
+        this.editor = editor;
     }
 
 }

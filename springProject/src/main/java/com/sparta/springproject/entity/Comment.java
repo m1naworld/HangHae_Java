@@ -13,10 +13,13 @@ public class Comment extends Timestamped{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String username;
 
+    @Column(nullable = false)
     private String content;
 
+    private String editor;
     @ManyToOne(fetch = FetchType.LAZY)
     private Posting posting;
 
@@ -26,8 +29,9 @@ public class Comment extends Timestamped{
         this.posting = posting;
     }
 
-    public void update(String content){
+    public void update(String content, String editor){
         this.content = content;
+        this.editor = editor;
     }
 
 }

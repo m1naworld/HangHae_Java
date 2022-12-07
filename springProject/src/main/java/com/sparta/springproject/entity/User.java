@@ -21,6 +21,10 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false)
+    @Enumerated(value = EnumType.STRING) // ADMIN 권한 부여는 DB로 조작한다고 가정.
+    private UserRoleEnum role = UserRoleEnum.USER;
+
     public User(String username, String password){
         this.username = username;
         this.password = password;

@@ -1,6 +1,6 @@
 package com.sparta.springproject.service;
 
-import com.sparta.springproject.dto.UserDto;
+import com.sparta.springproject.dto.UserRequestDto;
 import com.sparta.springproject.entity.User;
 import com.sparta.springproject.jwt.JwtUtil;
 import com.sparta.springproject.repository.UserRepository;
@@ -17,9 +17,9 @@ public class UserService {
     private final UserRepository userRepository;
     private final JwtUtil jwtUtil;
 
-    public String insertUser(UserDto userDto) {
-        String username = userDto.getUsername();
-        String password = userDto.getPassword();
+    public String insertUser(UserRequestDto userRequestDto) {
+        String username = userRequestDto.getUsername();
+        String password = userRequestDto.getPassword();
 
         Optional<User> userFound = userRepository.findByUsername(username);
 
@@ -33,16 +33,16 @@ public class UserService {
         return "success";
     }
 
-    public String login(UserDto userDto, HttpServletResponse response){
-        String username = userDto.getUsername();
-        String password = userDto.getPassword();
+    public String login(UserRequestDto userRequestDto, HttpServletResponse response){
+        String username = userRequestDto.getUsername();
+        String password = userRequestDto.getPassword();
 
         User user = userRepository.findByUsername(username).orElseThrow(() -> new IllegalArgumentException("사용자가 존재하지 않습니다."));
 
         if(!user.getPassword().equals(password)){
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
-        String accessToken = jwtUtil.createToken(userDto.getUsername());
+        String accessToken = jwtUtil.createToken(username, user.getRole());
         response.addHeader(JwtUtil.AUTHORIZATION_HEADER, accessToken);
         return "success";
     }

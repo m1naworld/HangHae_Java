@@ -47,7 +47,7 @@ public class PostController {
             PostingDto postingDto = postService.registerPost(postingRequestDto, request);
             return ResponseEntity.status(HttpStatus.OK).body(new PostingResponseDto("success", "게시글 등록 성공!", postingDto));
         } catch (JwtException e) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ResponseDto("fail", "토큰 에러"));
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ResponseDto("fail", "토큰이 유효하지 않습니다."));
         }
     }
 
