@@ -2,6 +2,7 @@ package com.sparta.springproject.controller;
 
 import com.sparta.springproject.dto.*;
 import com.sparta.springproject.service.PostService;
+import io.jsonwebtoken.JwtException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -46,7 +47,7 @@ public class PostController {
         try {
             PostingDto postingDto = postService.registerPost(postingRequestDto, request);
             return ResponseEntity.status(HttpStatus.OK).body(new PostingResponseDto("success", "게시글 등록 성공!", postingDto));
-        } catch (InvalidKeyException e) {
+        } catch (JwtException e) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ResponseDto("fail", "토큰 에러"));
         }
     }
@@ -57,7 +58,7 @@ public class PostController {
         try {
             PostingDto postingDto = postService.updatePost(id, postingRequestDto, request);
             return ResponseEntity.status(HttpStatus.OK).body(new PostingResponseDto("success", "게시글 수정 성공!", postingDto));
-        } catch (InvalidKeyException e){
+        } catch (JwtException e){
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ResponseDto("fail","토큰이 유효하지 않습니다."));
         } catch (NullPointerException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDto("fail", "게시글이 존재하지 않습니다."));
@@ -72,7 +73,7 @@ public class PostController {
         try {
             String result = postService.deletePost(id, request); // success
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(result, "게시글 삭제 성공!"));
-        } catch (InvalidKeyException e){
+        } catch (JwtException e){
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ResponseDto("fail","토큰이 유효하지 않습니다."));
         } catch (NullPointerException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDto("fail", "게시글이 존재하지 않습니다."));

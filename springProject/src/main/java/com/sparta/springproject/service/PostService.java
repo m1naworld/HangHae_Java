@@ -6,12 +6,12 @@ import com.sparta.springproject.entity.Posting;
 import com.sparta.springproject.jwt.JwtUtil;
 import com.sparta.springproject.repository.CommentRepository;
 import com.sparta.springproject.repository.PostingRepository;
+import io.jsonwebtoken.JwtException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.security.InvalidKeyException;
 import java.util.*;
 
 @Service
@@ -30,7 +30,7 @@ public class PostService {
 
         List<CommentDto> comments = new ArrayList<>();
 
-        for(int i=0; i< posting.getComments().size(); i++){
+        for (int i = 0; i < posting.getComments().size(); i++) {
             Comment comment = posting.getComments().get(i);
             comments.add(new CommentDto(comment));
         }
@@ -42,7 +42,7 @@ public class PostService {
     public List<PostingDto> findAllPost() {
         List<Posting> postings = postingRepository.findAllByOrderByModifiedAtDesc();
 
-        if(postings.isEmpty()){
+        if (postings.isEmpty()) {
             throw new NullPointerException("게시글들 없음");
         }
 
@@ -56,11 +56,11 @@ public class PostService {
     }
 
     // jwt를 검증 및 유저 반환
-    public String userCheck(HttpServletRequest request) throws InvalidKeyException {
+    public String userCheck(HttpServletRequest request) throws JwtException {
         String token = jwtUtil.resolveToken(request);
 
         if (!jwtUtil.validateToken(token)) {
-            throw new InvalidKeyException("토큰에러");
+            throw new JwtException("토큰에러");
         }
         return jwtUtil.getUserInfoFromToken(token);
     }
@@ -68,20 +68,20 @@ public class PostService {
 
     // 게시글 등록
     @Transactional
-    public PostingDto registerPost(PostingRequestDto postingRequestDto, HttpServletRequest request) throws InvalidKeyException {
+    public PostingDto registerPost(PostingRequestDto postingRequestDto, HttpServletRequest request) throws JwtException{
 
         String username = userCheck(request);
 
         Posting posting = new Posting(postingRequestDto, username);
         postingRepository.save(posting);
-        return  new PostingDto(posting, null);
+        return new PostingDto(posting, null);
 
     }
 
 
     //게시글 수정
     @Transactional
-    public PostingDto updatePost(Long id, PostingRequestDto postingDto, HttpServletRequest request) throws InvalidKeyException {
+    public PostingDto updatePost(Long id, PostingRequestDto postingDto, HttpServletRequest request) throws JwtException{
         String username = userCheck(request);
         String title = postingDto.getTitle();
         String content = postingDto.getContent();
@@ -94,27 +94,29 @@ public class PostService {
 
             List<CommentDto> comments = new ArrayList<>();
 
-            for(int i=0; i< posting.getComments().size(); i++){
+            for (int i = 0; i < posting.getComments().size(); i++) {
                 Comment comment = posting.getComments().get(i);
                 comments.add(new CommentDto(comment));
             }
 
             return new PostingDto(posting, comments);
-        } throw new IllegalArgumentException("유저 불일치");
+        }
+        throw new IllegalArgumentException("유저 불일치");
     }
 
     // 게시글 삭제
     @Transactional
-    public String deletePost(Long id, HttpServletRequest request) throws InvalidKeyException {
+    public String deletePost(Long id, HttpServletRequest request) throws JwtException{
         String username = userCheck(request);
 
         Posting posting = postingRepository.findById(id).orElseThrow(() -> new NullPointerException("게시글 없음"));
 
-        if(posting.getUsername().equals(username)){
+        if (posting.getUsername().equals(username)) {
             postingRepository.deleteById(id);
             commentRepository.deleteById(id);
 
             return "success";
-        } throw new IllegalArgumentException("유저 불일치");
+        }
+        throw new IllegalArgumentException("유저 불일치");
     }
 }
