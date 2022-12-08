@@ -111,7 +111,6 @@ public class PostService {
 
         if (posting.getUsername().equals(username) || role.equals(UserRoleEnum.ADMIN)) {
             postingRepository.deleteById(id);
-            commentRepository.deleteById(id);
 
             return "success";
         }

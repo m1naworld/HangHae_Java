@@ -28,7 +28,7 @@ public class Posting extends Timestamped{
 
     private String editor;
 
-    @OneToMany(mappedBy = "posting", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "posting", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE )
     private List<Comment> comments = new ArrayList<>();
 
     public Posting(PostingRequestDto postingRequestDto, String username) {
