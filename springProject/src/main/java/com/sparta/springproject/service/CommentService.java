@@ -31,7 +31,8 @@ public class CommentService {
 
         Posting postingFind = postingRepository.findById(postId).orElseThrow(() -> new NullPointerException("게시글 없음"));
 
-        Comment newComment = new Comment(username, comment, postingFind);
+//        Comment newComment = new Comment(username, comment, postingFind);
+        Comment newComment = new Comment(username, comment, postingFind.getId());
         commentRepository.save(newComment);
 
         return new CommentDto(newComment);

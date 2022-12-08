@@ -20,13 +20,17 @@ public class Comment extends Timestamped{
     private String content;
 
     private String editor;
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Posting posting;
 
-    public Comment(String username, String content, Posting posting) {
+    private Long postingId;
+
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    private Posting posting;
+
+    public Comment(String username, String content, Long postingId) {
         this.username = username;
         this.content = content;
-        this.posting = posting;
+        this.postingId = postingId;
+//        this.posting = posting;
     }
 
     public void update(String content, String editor){
