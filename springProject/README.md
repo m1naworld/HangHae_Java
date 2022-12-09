@@ -76,7 +76,7 @@
 <img width="1217" alt="스크린샷 2022-12-08 오후 4 33 08" src="https://user-images.githubusercontent.com/85235063/206386258-62b58ded-890f-490d-a75d-4afdbe23b63f.png">
 
 ### API 명세
-<img width="1299" alt="스크린샷 2022-12-10 오전 12 02 22" src="https://user-images.githubusercontent.com/85235063/206731244-967e59cf-ea95-4837-a336-4eff1468075c.png">
-<img width="1274" alt="스크린샷 2022-12-10 오전 12 12 41" src="https://user-images.githubusercontent.com/85235063/206733379-3883c66b-31b2-4e86-b9e5-31bd3b1d8c78.png">
+<img width="1299" alt="스크린샷 2022-12-10 오전 12 02 22" src="https://user-images.githubusercontent.com/85235063/206736366-21f4940b-d25b-402f-ab50-a2896ef0f768.png">
+<img width="1274" alt="스크린샷 2022-12-10 오전 12 12 41" src="https://user-images.githubusercontent.com/85235063/206735967-436ae37e-cbcf-4d20-89d8-a4a492c146d0.png">
 <img width="1274" alt="스크린샷 2022-12-10 오전 12 12 55" src="https://user-images.githubusercontent.com/85235063/206733392-899921b2-6648-4ffa-8c27-663cd3f56cda.png">
 <img width="1274" alt="스크린샷 2022-12-10 오전 12 13 06" src="https://user-images.githubusercontent.com/85235063/206733399-39b77571-4760-4d06-9e4b-fae3110a43c0.png">
