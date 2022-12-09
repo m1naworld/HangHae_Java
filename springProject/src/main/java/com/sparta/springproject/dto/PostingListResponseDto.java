@@ -10,8 +10,8 @@ import java.util.List;
 public class PostingListResponseDto extends ResponseDto{
     private List<PostingDto> postingListDto;
 
-    public PostingListResponseDto(String result, String message, List<PostingDto> postingListDto) {
-        super(result, message);
+    public PostingListResponseDto(List<PostingDto> postingListDto) {
+        super.result = "success";
         this.postingListDto = postingListDto;
     }
 }

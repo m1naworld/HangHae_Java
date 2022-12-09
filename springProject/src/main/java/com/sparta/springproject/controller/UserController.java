@@ -1,5 +1,6 @@
 package com.sparta.springproject.controller;
 
+import com.sparta.springproject.dto.ErrorMessageDto;
 import com.sparta.springproject.dto.ResponseDto;
 import com.sparta.springproject.dto.UserRequestDto;
 import com.sparta.springproject.service.UserService;
@@ -24,9 +25,9 @@ public class UserController {
     public ResponseEntity<ResponseDto> signup(@RequestBody @Valid UserRequestDto userRequestDto) {
         try {
             String result = userService.insertUser(userRequestDto); // success
-            return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(result, "회원가입 성공!"));
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(result));
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(new ResponseDto("fail", "중복된 username 입니다."));
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(new ErrorMessageDto("중복된 username 입니다."));
         }
     }
 
@@ -34,9 +35,9 @@ public class UserController {
     public ResponseEntity<ResponseDto> login(@RequestBody UserRequestDto userRequestDto, HttpServletResponse response) {
         try {
             String result = userService.login(userRequestDto, response); // success
-            return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(result, "로그인 성공!"));
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(result));
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ResponseDto("fail", "아이디 혹은 비밀번호가 일치하지 않습니다."));
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ErrorMessageDto("아이디 혹은 비밀번호가 일치하지 않습니다."));
         }
 
     }

@@ -9,8 +9,8 @@ public class CommentResponseDto extends ResponseDto {
 
     private CommentDto commentDto;
 
-    public CommentResponseDto(String result, String message, CommentDto commentDto) {
-        super(result, message);
+    public CommentResponseDto(CommentDto commentDto) {
+        super.result = "success";
         this.commentDto = commentDto;
     }
 }
