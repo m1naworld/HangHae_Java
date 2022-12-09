@@ -29,7 +29,7 @@ public class CommentController {
         } catch (JwtException e) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ResponseDto("fail", "토큰이 유효하지 않습니다."));
         } catch (NullPointerException e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDto("fail", "게시글이 존재하지 않습니다."));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDto("fail", "게시글이 존재하지 않습니다."));
         }
     }
 
@@ -42,7 +42,7 @@ public class CommentController {
         } catch (JwtException e) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ResponseDto("fail", "토큰이 유효하지 않습니다."));
         } catch (NullPointerException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDto("fail", "게시글이 존재하지 않습니다."));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDto("fail", "게시글이 존재하지 않습니다."));
         }catch (IllegalArgumentException e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDto("fail", "작성자만 수정 할 수 있습니다."));
         }
@@ -56,7 +56,7 @@ public class CommentController {
         } catch (JwtException e){
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ResponseDto("fail","토큰이 유효하지 않습니다."));
         } catch (NullPointerException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDto("fail", "게시글이 존재하지 않습니다."));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDto("fail", "게시글이 존재하지 않습니다."));
         } catch (IllegalArgumentException e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDto("fail", "작성자만 삭제할 수 있습니다."));
         }
